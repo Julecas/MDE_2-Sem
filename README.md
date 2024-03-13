@@ -1,2 +1,3 @@
 # MDE_2-Sem
-Backup files
+Backup dos nosso ficheirinhos
+Bem vindos pessoal e bom semestre. 
