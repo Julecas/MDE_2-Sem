@@ -32,16 +32,16 @@ VALUES
 ( "Júlio"	, "Ajuda Lisboa"  ,	919999999, 626337181);
 
 -- Aqui o joel e o rodrigo tem duas instalações enquanto os restantes tem apenas uma
-INSERT IGNORE INTO Installation (address, Client_idClient)   
+INSERT IGNORE INTO Installation (address, Client_idClient, Type)   
 VALUES 
-("Rua das fontralhinhas Nº 130",1),
-("Praceta da Certa  Nº 140",2),
-("Avenida do Buçal Nº 130",3),
-("Calçada da tapadinha Nº 130",3),
-("Rua quintal de cima Nº 100",4),
-("Alheira de mirandela Nº 14",5),
-("Avenida das alheiras Nº 1",5),
-("Rua do bucetildes",2); -- esta instalação não tem contrato, estamos a testar para o ponto RF8
+("Rua das fontralhinhas Nº 130",1,"Home"),
+("Praceta da Certa  Nº 140",2,"Home"),
+("Avenida do Buçal Nº 130",3,"Office"),
+("Calçada da tapadinha Nº 130",3,"Apartment"),
+("Rua quintal de cima Nº 100",4,"Store"),
+("Alheira de mirandela Nº 14",5,"Apartment"),
+("Avenida das alheiras Nº 1",5,"Office"),
+("Rua do bucetildes",2,"Home"); -- esta instalação não tem contrato, estamos a testar para o ponto RF8
 
 -- tabela de desrição de serviço (custo é valor mensal e Max devices é tipos de dispositivos)
 INSERT IGNORE INTO ServiceDesc (name, Cost, MaxDevices)
@@ -54,13 +54,13 @@ VALUES
 
 INSERT IGNORE INTO Contract (StartDate, ServiceDuration, ServiceDesc_Type, Installation_code)
 VALUES 
-('2023-12-10', '3 years', 2, 1),
-('2023-12-12', '2 years', 1, 2),
-('2023-10-10', '1 year', 3, 3),
-('2023-12-10', '1 year', 2, 4),
-('2023-12-29', '3 years', 1, 5),
-('2023-12-10', '2 years', 2, 6),
-('2023-12-10', '2 years', 1, 7);
+('2023-12-10', '2025-12-10', 2, 1),
+('2023-12-12', '2026-06-10', 1, 2),
+('2023-10-10', '2024-10-10', 3, 3),
+('2023-12-10', '2025-11-10', 2, 4),
+('2023-12-29', '2027-12-29', 1, 5),
+('2023-12-10', '2025-12-10', 2, 6),
+('2023-12-10', '2025-12-10', 1, 7);
 
 
 -- DEVICES 
@@ -96,7 +96,9 @@ VALUES
 
 -- INVOICE 
 
-INSERT IGNORE INTO Invoice (InvoiceNumber, Date, ServicePackage, State, Contract_idContract)
+-- Aqui vamos criar um trigger par podermos inserir a data do invoice baseada na data corrente 
+
+INSERT INTO Invoice (InvoiceNumber, Date, ServicePackage, State, Contract_idContract)
 VALUES
 (822547, '2023-12-11', 2, "Paid", 1),
 (801770, '2024-01-01', 1, "Paid", 2),
@@ -105,7 +107,6 @@ VALUES
 (169529, '2024-01-01', 1, "Pending", 5),
 (416611, '2023-12-11', 2, "Pending", 6),
 (106329, '2023-12-11', 1, "Pending", 7);
-
 
 -- SELECT * FROM Clients;
 -- SELECT * FROM Installation;
@@ -118,9 +119,11 @@ VALUES
 
 -- isto é basicamente um inner join entre clients e installation
 
-SELECT c.name, c.main_address, code as Installation_Code, i.address
+SELECT c.name, c.main_address, code as Installation_Code, i.address, i.Type
 FROM Clients c
 INNER JOIN installation i on c.idClient = i.Client_idClient
+WHERE
+i.Type = "Home"
 ORDER BY
  name ASC;
 
