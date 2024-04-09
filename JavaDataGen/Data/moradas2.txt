@@ -1,0 +1,365 @@
+Rua da Liberdade, Lisboa
+Avenida dos Descobrimentos, Porto
+Travessa da Esperança, Coimbra
+Praça da Alegria, Braga
+Largo do Pelourinho, Faro
+Rua dos Sonhos Perdidos, Aveiro
+Avenida das Rosas Vermelhas, Setúbal
+Rua das Gaivotas, Vila Nova de Gaia
+Travessa do Silêncio, Évora
+Avenida dos Vinhedos, Portimão
+Rua das Oliveiras, Guimarães
+Praça dos Pescadores, Cascais
+Avenida das Marés, Funchal
+Rua dos Sussurros, Ponta Delgada
+Largo da Serenidade, Leiria
+Rua das Cores, Barreiro
+Avenida dos Amores Proibidos, Viseu
+Travessa das Recordações, Bragança
+Praça da Harmonia, Viana do Castelo
+Rua do Silêncio Noturno, Amarante
+Rua da Felicidade, Aveiro
+Avenida das Borboletas, Braga
+Travessa do Sol Nascente, Coimbra
+Praça das Flores, Évora
+Largo dos Poetas, Faro
+Rua das Artes, Guimarães
+Avenida dos Suspiros, Lisboa
+Rua da Saudade, Porto
+Travessa da Amizade, Setúbal
+Avenida do Mar, Vila Nova de Gaia
+Rua das Lembranças, Leiria
+Praça da Juventude, Portimão
+Avenida das Estrelas, Funchal
+Rua dos Segredos, Ponta Delgada
+Largo da Paz, Viseu
+Rua das Ilusões, Bragança
+Travessa do Amor Eterno, Viana do Castelo
+Praça da Esperança, Cascais
+Avenida dos Sonhos, Amarante
+Rua da Liberdade, Barreiro
+Rua da Serenata, Aveiro
+Avenida dos Desejos, Braga
+Travessa das Estrelas Cadentes, Coimbra
+Praça do Entardecer, Évora
+Largo das Memórias, Faro
+Rua das Fantasias, Guimarães
+Avenida da Felicidade, Lisboa
+Rua do Luar, Porto
+Travessa do Abraço, Setúbal
+Avenida das Ondas, Vila Nova de Gaia
+Rua dos Versos, Leiria
+Praça das Borboletas, Portimão
+Avenida das Emoções, Funchal
+Rua da Imaginação, Ponta Delgada
+Largo da Harmonia, Viseu
+Rua do Encantamento, Bragança
+Travessa do Encanto, Viana do Castelo
+Praça das Ilusões, Cascais
+Avenida do Sonho, Amarante
+Rua do Coração, Barreiro
+Rua das Maravilhas, Aveiro
+Avenida da Harmonia, Braga
+Travessa dos Encantos, Coimbra
+Praça da Inspiração, Évora
+Largo das Promessas, Faro
+Rua dos Sonhos, Guimarães
+Avenida do Horizonte, Lisboa
+Rua da Amizade, Porto
+Travessa da Felicidade, Setúbal
+Avenida dos Encantamentos, Vila Nova de Gaia
+Rua da Imaginação, Leiria
+Praça da Liberdade, Portimão
+Rua do Paraíso, Ponta Delgada
+Largo da Serenidade, Viseu
+Rua do Encanto, Bragança
+Travessa do Amor, Viana do Castelo
+Praça dos Sonhos, Cascais
+Avenida da Esperança, Amarante
+Rua do Silêncio, Barreiro
+Rua das Rosas Vermelhas, Aveiro
+Avenida das Gaivotas, Braga
+Travessa dos Sussurros, Coimbra
+Praça das Fontes, Évora
+Largo das Artes, Faro
+Rua dos Segredos Antigos, Guimarães
+Avenida da Primavera, Lisboa
+Rua do Marfim, Porto
+Travessa das Lembranças, Setúbal
+Avenida dos Suspiros, Vila Nova de Gaia
+Rua das Estrelas Cadentes, Leiria
+Praça do Horizonte, Portimão
+Avenida das Melodias, Funchal
+Rua da Harmonia Celestial, Ponta Delgada
+Largo dos Anjos, Viseu
+Rua do Crepúsculo, Bragança
+Travessa dos Encantos, Viana do Castelo
+Praça das Promessas, Cascais
+Avenida da Serenidade, Amarante
+Rua dos Sonhos Dourados, Barreiro
+Rua das Margaridas, Águeda
+Avenida dos Girassóis, Águeda
+Travessa das Amendoeiras, Águeda
+Rua das Figueiras, Albergaria-a-Velha
+Avenida dos Pinheiros, Albergaria-a-Velha
+Travessa das Oliveiras, Albergaria-a-Velha
+Rua das Vinhas, Anadia
+Avenida das Papoilas, Anadia
+Travessa dos Cerejeiras, Anadia
+Rua das Montanhas, Arouca
+Avenida das Cachoeiras, Arouca
+Travessa dos Bosques, Arouca
+Rua dos Moliceiros, Aveiro
+Avenida das Salinas, Aveiro
+Travessa dos Ovos Moles, Aveiro
+Rua das Oliveiras, Castelo de Paiva
+Avenida dos Castanheiros, Castelo de Paiva
+Travessa das Amendoeiras, Castelo de Paiva
+Rua dos Pescadores, Espinho
+Avenida das Ondas, Espinho
+Travessa dos Surfistas, Espinho
+Rua das Laranjeiras, Estarreja
+Avenida das Amendoeiras, Estarreja
+Travessa das Rosas, Estarreja
+Rua das Feiras, Santa Maria da Feira
+Avenida dos Fogaceiros, Santa Maria da Feira
+Travessa das Cantigas, Santa Maria da Feira
+Rua dos Barcos, Ílhavo
+Avenida dos Faróis, Ílhavo
+Travessa das Conchas, Ílhavo
+Rua das Vinhas, Mealhada
+Avenida dos Vinhedos, Mealhada
+Travessa das Uvas, Mealhada
+Rua das Barcas, Murtosa
+Avenida dos Moliceiros, Murtosa
+Travessa dos Navegantes, Murtosa
+Rua das Azinheiras, Oliveira de Azeméis
+Avenida dos Carvalhos, Oliveira de Azeméis
+Travessa dos Pinheiros, Oliveira de Azeméis
+Rua das Amendoeiras, Oliveira do Bairro
+Avenida dos Carvalhos, Oliveira do Bairro
+Travessa dos Pinheiros, Oliveira do Bairro
+Rua das Gaivotas, Ovar
+Avenida das Ondas, Ovar
+Travessa dos Pescadores, Ovar
+Rua dos Operários, São João da Madeira
+Avenida dos Trabalhadores, São João da Madeira
+Travessa das Fábricas, São João da Madeira
+Rua das Fontes, Sever do Vouga
+Avenida dos Riachos, Sever do Vouga
+Travessa das Nascentes, Sever do Vouga
+Rua das Dunas, Vagos
+Avenida dos Pinheiros, Vagos
+Travessa das Ondas, Vagos
+Rua das Colinas, Vale de Cambra
+Avenida das Montanhas, Vale de Cambra
+Travessa das Fontes, Vale de Cambra
+Rua das Oliveiras, Aljustrel
+Avenida dos Girassóis, Aljustrel
+Travessa das Amendoeiras, Aljustrel
+Rua das Rosas, Almodôvar
+Avenida dos Pinheiros, Almodôvar
+Travessa das Violetas, Almodôvar
+Rua dos Lírios, Alvito
+Avenida das Papoilas, Alvito
+Travessa das Amendoeiras, Alvito
+Rua dos Sobreiros, Barrancos
+Avenida das Oliveiras, Barrancos
+Travessa dos Pinheiros, Barrancos
+Rua das Amendoeiras, Beja
+Avenida dos Cravos, Beja
+Travessa das Rosas, Beja
+Rua dos Alentejanos, Castro Verde
+Avenida dos Montes, Castro Verde
+Travessa das Oliveiras, Castro Verde
+Rua das Vinhas, Cuba
+Avenida dos Eucaliptos, Cuba
+Travessa das Azinheiras, Cuba
+Rua das Papoilas, Ferreira do Alentejo
+Avenida dos Girassóis, Ferreira do Alentejo
+Travessa dos Cravos, Ferreira do Alentejo
+Rua das Oliveiras, Mértola
+Avenida dos Pinheiros, Mértola
+Travessa dos Eucaliptos, Mértola
+Rua dos Alentejanos, Moura
+Avenida dos Cravos, Moura
+Travessa das Oliveiras, Moura
+Rua das Amendoeiras, Odemira
+Avenida dos Girassóis, Odemira
+Travessa das Papoilas, Odemira
+Rua dos Sobreiros, Ourique
+Avenida dos Pinheiros, Ourique
+Travessa das Oliveiras, Ourique
+Rua das Rosas, Serpa
+Avenida dos Cravos, Serpa
+Travessa das Papoilas, Serpa
+Rua das Amendoeiras, Vidigueira
+Avenida dos Girassóis, Vidigueira
+Travessa dos Cravos, Vidigueira
+Travessa dos Cravos, VidigueiraRua das Margaridas, Águeda
+Rua das Oliveiras, Alandroal
+Avenida dos Girassóis, Alandroal
+Travessa das Amendoeiras, Alandroal
+Rua das Amendoeiras, Arraiolos
+Avenida dos Cravos, Arraiolos
+Travessa das Rosas, Arraiolos
+Rua dos Lírios, Borba
+Avenida das Papoilas, Borba
+Travessa das Amendoeiras, Borba
+Rua das Oliveiras, Estremoz
+Avenida dosRua das Oliveiras, Estremoz
+Avenida dos Girassóis, Estremoz
+Travessa das Amendoeiras, Estremoz
+Rua dos Lírios, Évora
+Avenida das Papoilas, Évora
+Travessa das Rosas, Évora
+Rua das Oliveiras, Montemor-o-Novo
+Avenida dos Girassóis, Montemor-o-Novo
+Travessa das Amendoeiras, Montemor-o-Novo
+Rua dos Lírios, Mora
+Avenida das Papoilas, Mora
+Travessa das Rosas, Mora
+Rua das Oliveiras, Mourão
+Avenida dos Girassóis, Mourão
+Travessa das Amendoeiras, Mourão
+Rua dos Lírios, Portel
+Avenida das Papoilas, Portel
+Travessa das Rosas, Portel
+Rua das Oliveiras, Redondo
+Avenida dos Girassóis, Redondo
+Travessa das Amendoeiras, Redondo
+Rua dos Lírios, Reguengos de Monsaraz
+Avenida das Papoilas, Reguengos de Monsaraz
+Travessa das Rosas, Reguengos de Monsaraz
+Rua das Oliveiras, Vendas Novas
+Avenida dos Girassóis, Vendas Novas
+Travessa das Amendoeiras, Vendas Novas
+Rua dos Lírios, Viana do Alentejo
+Avenida das Papoilas, Viana do Alentejo
+Travessa das Rosas, Viana do Alentejo
+Rua das Oliveiras, Vila Viçosa
+Avenida dos Girassóis, Vila Viçosa
+Travessa das Amendoeiras, Vila Viçosa
+Rua dos Lírios, Amares
+Avenida das Papoilas, Amares
+Travessa das Rosas, Amares
+Rua das Oliveiras, Barcelos
+Avenida dos Girassóis, Barcelos
+Travessa das Amendoeiras, Barcelos
+Rua dos Lírios, Braga
+Avenida das Papoilas, Braga
+Travessa das Rosas, Braga
+Rua das Oliveiras, Cabeceiras de Basto
+Avenida dos Girassóis, Cabeceiras de Basto
+Travessa das Amendoeiras, Cabeceiras de Basto
+Rua dos Lírios, Celorico de Basto
+Avenida das Papoilas, Celorico de Basto
+Travessa das Rosas, Celorico de Basto
+Rua das Oliveiras, Esposende
+Avenida dos Girassóis, Esposende
+Travessa das Amendoeiras, Esposende
+Rua dos Lírios, Fafe
+Avenida das Papoilas, Fafe
+Travessa das Rosas, Fafe
+Avenida dos Girassóis, Guimarães
+Travessa das Amendoeiras, Guimarães
+Rua dos Lírios, Póvoa de Lanhoso
+Avenida das Papoilas, Póvoa de Lanhoso
+Travessa das Rosas, Póvoa de Lanhoso
+Rua das Oliveiras, Terras de Bouro
+Avenida dos Girassóis, Terras de Bouro
+Travessa das Amendoeiras, Terras de Bouro
+Rua dos Lírios, Vieira do Minho
+Avenida das Papoilas, Vieira do Minho
+Travessa das Rosas, Vieira do Minho
+Rua das Oliveiras, Vila Nova de Famalicão
+Avenida dos Girassóis, Vila Nova de Famalicão
+Travessa das Amendoeiras, Vila Nova de Famalicão
+Rua dos Lírios, Vila Verde
+Avenida das Papoilas, Vila Verde
+Travessa das Rosas, Vila Verde
+Rua das Oliveiras, Vizela
+Avenida dos Girassóis, Vizela
+Travessa das Amendoeiras, Vizela
+Rua dos Lírios, Alfândega da Fé
+Avenida das Papoilas, Alfândega da Fé
+Travessa das Rosas, Alfândega da Fé
+Rua das Oliveiras, Bragança
+Avenida dos Girassóis, Bragança
+Travessa das Amendoeiras, Bragança
+Rua dos Lírios, Carrazeda de Ansiães
+Avenida das Papoilas, Carrazeda de Ansiães
+Travessa das Rosas, Carrazeda de Ansiães
+Rua das Oliveiras, Freixo de Espada à Cinta
+Avenida dos Girassóis, Freixo de Espada à Cinta
+Travessa das Amendoeiras, Freixo de Espada à Cinta
+Rua dos Lírios, Macedo de Cavaleiros
+Avenida das Papoilas, Macedo de Cavaleiros
+Travessa das Rosas, Macedo de Cavaleiros
+Rua das Oliveiras, Miranda do Douro
+Avenida dos Girassóis, Miranda do Douro
+Travessa das Amendoeiras, Miranda do Douro
+Rua dos Lírios, Mirandela
+Avenida das Papoilas, Mirandela
+Travessa das Rosas, Mirandela
+Rua das Oliveiras, Mogadouro
+Avenida dos Girassóis, Mogadouro
+Travessa das Amendoeiras, Mogadouro
+Rua dos Lírios, Torre de Moncorvo
+Avenida das Papoilas, Torre de Moncorvo
+Travessa das Rosas, Torre de Moncorvo
+Rua das Oliveiras, Vila Flor
+Avenida dos Girassóis, Vila Flor
+Travessa das Amendoeiras, Vila Flor
+Rua dos Lírios, Vimioso
+Avenida das Papoilas, Vimioso
+Travessa das Rosas, Vimioso
+Rua das Oliveiras, Vinhais
+Avenida dos Girassóis, Vinhais
+Travessa das Amendoeiras, VinhaisRua dos Lírios, Belmonte
+Avenida das Papoilas, Belmonte
+Travessa das Rosas, Belmonte
+Rua das Oliveiras, Castelo Branco
+Avenida dos Girassóis, Castelo Branco
+Travessa das Amendoeiras, Castelo Branco
+Rua dos Lírios, Covilhã
+Avenida das Papoilas, Covilhã
+Travessa das Rosas, Covilhã
+Rua das Oliveiras, Fundão
+Avenida dos Girassóis, Fundão
+Travessa das Amendoeiras, Fundão
+Rua dos Lírios, Idanha-a-Nova
+Avenida das Papoilas, Idanha-a-Nova
+Travessa das Rosas, Idanha-a-Nova
+Rua das Oliveiras, Oleiros
+Avenida dos Girassóis, Oleiros
+Travessa das Amendoeiras, Oleiros
+Rua dos Lírios, Penamacor
+Avenida das Papoilas, Penamacor
+Travessa das Rosas, Penamacor
+Rua das Oliveiras, Proença-a-Nova
+Avenida dos Girassóis, Proença-a-Nova
+Travessa das Amendoeiras, Proença-a-Nova
+Rua dos Lírios, Sertã
+Avenida das Papoilas, Sertã
+Travessa das Rosas, Sertã
+Rua das Oliveiras, Vila de Rei
+Avenida dos Girassóis, Vila de Rei
+Travessa das Amendoeiras, Vila de Rei
+Rua dos Lírios, Vila Velha de Ródão
+Avenida das Papoilas, Vila Velha de Ródão
+Travessa das Rosas, Vila Velha de Ródão
+Rua das Oliveiras, Arganil
+Avenida dos Girassóis, Arganil
+Travessa das Amendoeiras, Arganil
+Rua dos Lírios, Cantanhede
+Avenida das Papoilas, Cantanhede
+Travessa das Rosas, Cantanhede
+Rua das Oliveiras, Coimbra
+Avenida dos Girassóis, Coimbra
+Travessa das Amendoeiras, Coimbra
+Rua dos Lírios, Condeixa-a-Nova
+Avenida das Papoilas, Condeixa-a-Nova
+Travessa das Rosas, Condeixa-a-Nova
+Rua das Oliveiras, Figueira da Foz
+Avenida dos Girassóis, Figueira

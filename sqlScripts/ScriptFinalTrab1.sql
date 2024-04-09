@@ -130,180 +130,92 @@ VALUES
 -- SELECT * FROM Invoice;
 -- SELECT * FROM suppliers;
 
--- RF4
-call clients_by_installation_type("Home");
--- RF5
-call clients_by_package_type(1); -- digit service package type (-- 1 lowcost , 2 normal, 3 professional)
--- RF6
-call installation_devices('2020-01-01','2024-3-31',1); -- last digit installation code
--- RF7 
- call client_invoice_average('2019-01-01','2024-3-31',3); -- last digit is clientId
--- RF8 
- call installations_with_automations('2020-01-01','2024-03-31');
--- RF10
-call total_clients_InvoiceState("Pending"); -- or "Paid"
--- RF 11
-call total_Invoice_value_all_clients();
--- RF12
- select get_num_installations_client(3); -- digit is clientId
-
--- TODO 3, 12, (13, 14 martim) e falta mudar os procedimentos anonimos para não anonimos e falta dividir a tabela dos devices.
--- mudar o 8 e o 6
-
-
-
-/*  DESCOMENTAR PRIMEIRA VEZ PRA CRIAR PROCEDIMENTOS E FUNCOES
 -- RF4 Visualizar os dados de cliente cujas instalações sejam de uma determinada tipologia.
+
 -- isto é basicamente um inner join entre clients e installation
-DELIMITER $$$
-CREATE PROCEDURE clients_by_installation_type(IN installation_type VARCHAR(15))
-BEGIN	
-	SELECT c.name, c.main_address, code as Installation_Code, i.address as Installation_address, i.Type
-	FROM Clients c
-	INNER JOIN installation i on c.idClient = i.Client_idClient
-	WHERE
-	i.Type = installation_type
-	ORDER BY
-	 name ASC;
-END; $$$
-DELIMITER;
+
+SELECT c.name, c.main_address, code as Installation_Code, i.address as Installation_address, i.Type
+FROM Clients c
+INNER JOIN installation i on c.idClient = i.Client_idClient
+WHERE
+i.Type = "Home"
+ORDER BY
+ name ASC;
 
 -- RF5 Visualizar os clientes que tenham contratado um determinado pacote/serviço.
-DELIMITER $$$
-CREATE  PROCEDURE clients_by_package_type(IN ServiceType INT)
-BEGIN	
-	SELECT cl.name, cl.main_address, i.address as Installation_Address, s.name
-	FROM installation i
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	INNER JOIN Contract co ON i.code = co.Installation_code
-	INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
-	WHERE
-		co.ServiceDesc_Type = ServiceType;
-	-- 1 lowcost , 2 normal, 3 professional
-END; $$$
-DELIMITER;
+
+SELECT cl.name, cl.main_address, i.address as Installation_Address, s.name
+FROM installation i
+INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
+INNER JOIN Contract co ON i.code = co.Installation_code
+INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
+WHERE
+	co.ServiceDesc_Type = 1;
+-- 1 lowcost , 2 normal, 3 professional
 
 -- RF6 Visualizar todos os dispositivos instalados numa dada instalação dentro de um intervalo de tempo.
-DELIMITER $$$
-CREATE  PROCEDURE installation_devices(IN startDate date, IN endDate date, IN installationCode INT)
-BEGIN	
-	SELECT d.* , i.address as Installation_address
-	FROM Devices d
-	INNER JOIN Installation i ON i.code = d.Installation_code
-	WHERE
-		 i.code = installationCode
-		 and (d.InstallationDate >= startDate and d.InstallationDate <= endDate);
-END; $$$
-DELIMITER;
+
+SELECT d.* , i.address as Installation_address
+FROM Devices d
+INNER JOIN Installation i ON i.code = d.Installation_code
+WHERE
+	 i.code = 1
+     and (d.InstallationDate >= '2020-01-01' and d.InstallationDate <= '2024-3-31');
 
 -- RF7 Visualizar o valor médio de faturação (fatura paga) de um cliente num intervalo de tempo
-DELIMITER $$$
-CREATE  PROCEDURE client_invoice_average(IN startDate date, IN endDate date, IN clientId INT)
-BEGIN	
 
-	SELECT cl.name, AVG(s.cost) as Average_Invoice_Value
-	FROM Invoice inv
-	INNER JOIN Contract co ON idContract = inv.Contract_idContract
-	INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
-	INNER JOIN Installation i ON i.code = co.Installation_code
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	WHERE
-		cl.idClient = clientId and -- escolhemos o joel que tem duas instalações
-		(inv.Date >= startDate and inv.Date <= endDate);
-END; $$$
-DELIMITER;
- 
- 
--- RF8 Visualizar as instalações com automações, dentro de um intervalo de tempo.     
-DELIMITER $$$
-CREATE PROCEDURE installations_with_automations(IN startDate date, IN endDate date)
-BEGIN	
-
-	SELECT i.address as addresses_with_automations
-	FROM Installation i
-	RIGHT JOIN Devices d ON I.code = d.Installation_code
-	WHERE
-	(d.InstallationDate >= startDate and d.InstallationDate <= endDate)
-	GROUP BY
-	i.address
-	ORDER BY
-	 d.installation_code ASC;
-     
-END; $$$
-DELIMITER;
-
-
- -- RF10 Proponha um requisito relevante ainda por identificar e que requeira uma query simples para o satisfazer (Query ou View usada numa Query). Implemente.
- -- Todos os clientes que ainda não pagaram o invoice
-DELIMITER $$$
-CREATE  PROCEDURE total_clients_InvoiceState(IN state VARCHAR(10))
-BEGIN
-
-	SELECT cl.name, cl.main_address, i.address as Installation_Address, inv.State
-	FROM installation i
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	INNER JOIN Contract co ON i.code = co.Installation_code
-	INNER JOIN Invoice inv ON co.idContract = inv.Contract_idContract
-	WHERE
-		inv.State = state
-	ORDER BY
-		cl.name ASC;
-END; $$$
-DELIMITER;
+SELECT cl.name, AVG(s.cost) as Average_Invoice_Value
+FROM Invoice inv
+INNER JOIN Contract co ON idContract = inv.Contract_idContract
+INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
+INNER JOIN Installation i ON i.code = co.Installation_code
+INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
+WHERE
+	cl.idClient = 3 and -- escolhemos o joel que tem duas instalações
+    (inv.Date >= '2020-01-01' and inv.Date <= '2024-3-31');
     
--- RF 11 Proponha um requisito relevante ainda por identificar e que requeira uma query com funções de agregação (sum, max, min, avg, etc) para o satisfazer. Implemente.
--- total pago ou por pagar por cada cliente
-DELIMITER $$$
-CREATE  PROCEDURE total_Invoice_value_all_clients()
-BEGIN
+-- RF8 Visualizar as instalações com automações, dentro de um intervalo de tempo.     
+	
+SELECT i.address as addresses_with_automations
+FROM Installation i
+RIGHT JOIN Devices d ON I.code = d.Installation_code
+WHERE
+(d.InstallationDate >= '2020-01-01' and d.InstallationDate <= '2024-3-31')
+GROUP BY
+i.address
+ORDER BY
+ d.installation_code ASC;
+ 
+ -- RF10 Proponha um requisito relevante ainda por identificar e que requeira uma query simples para o satisfazer (Query ou View usada numa Query). Implemente.
+ 
+ -- Todos os clientes que ainda não pagaram o invoice
+ 
+SELECT cl.name, cl.main_address, i.address as Installation_Address, inv.State
+FROM installation i
+INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
+INNER JOIN Contract co ON i.code = co.Installation_code
+INNER JOIN Invoice inv ON co.idContract = inv.Contract_idContract
+WHERE
+	inv.State = "Pending"
+ORDER BY
+	cl.name ASC;
+    
+    -- RF 11 Proponha um requisito relevante ainda por identificar e que requeira uma query com funções de agregação (sum, max, min, avg, etc) para o satisfazer. Implemente.
+ 
+	-- total pago ou por pagar por cada cliente
+    
+SELECT cl.name, inv.state , SUM(s.cost) as Invoice_Total
+FROM Invoice inv
+INNER JOIN Contract co ON idContract = inv.Contract_idContract
+INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
+INNER JOIN Installation i ON i.code = co.Installation_code
+INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
+GROUP BY
+cl.name
+ORDER BY
+	cl.name ASC;
 
-	SELECT cl.name, inv.state , SUM(s.cost) as Invoice_Total
-	FROM Invoice inv
-	INNER JOIN Contract co ON idContract = inv.Contract_idContract
-	INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
-	INNER JOIN Installation i ON i.code = co.Installation_code
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	GROUP BY
-	cl.name
-	ORDER BY
-		cl.name ASC;
-        
-END; $$$
-DELIMITER ;
 
--- RF 12 Proponha um requisito relevante ainda por identificar e que requeira o desenvolvimento de functions / procedures para o satisfazer. Implemente.
-DELIMITER $$$
-CREATE FUNCTION get_num_client_installations(ClientId int)
-RETURNS int
-BEGIN
-	DECLARE total int;
-	SELECT COUNT(i.code) INTO total
-	FROM installation i
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	WHERE
-		idClient = ClientId;
-        
-	RETURN total;
 
-END; $$$
-DELIMITER ;
-
--- RF 12 Proponha um requisito relevante ainda por identificar e que requeira o desenvolvimento de functions / procedures para o satisfazer. Implemente.
-DELIMITER $$$
-CREATE FUNCTION get_num_installations_client(ClientId int)
-RETURNS int
-BEGIN
-	DECLARE total int;
-	SELECT COUNT(i.code) INTO total
-	FROM installation i
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	WHERE
-		idClient = ClientId;
-        
-	RETURN total;
-
-END; $$$
-DELIMITER ;
-
-*/
+-- TODO 3, 12, 13, 14 e falta mudar os procedimentos anonimos para não anonimos e falta dividir a tabela dos devices.
 
