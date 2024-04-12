@@ -66,16 +66,25 @@ DeviceDesc 	( Model 			, SupplierID 	, TypeID)
             ( "Washing Machine"	, 2				, 2		),
             ( "Termomo"			, 2				, 1		),
 			( "AC"				, 2 			, 2		);
+            
 INSERT IGNORE INTO 
 DeviceStateDesc ( Description )
 		 Values ( "Active" 	  ),
 				( "Inactive"  );
                 
 DROP PROCEDURE IF EXISTS clients_by_installation_type;
+DROP PROCEDURE IF EXISTS clients_by_package_type;
+DROP PROCEDURE IF EXISTS installation_devices;
+DROP PROCEDURE IF EXISTS client_invoice_average;
+DROP PROCEDURE IF EXISTS installations_with_automations;
+DROP PROCEDURE IF EXISTS total_clients_InvoiceState;
+DROP PROCEDURE IF EXISTS total_Invoice_value_all_clients;
+DROP FUNCTION  IF EXISTS get_num_client_installations;
+
 DELIMITER $$$
 CREATE PROCEDURE clients_by_installation_type(IN installation_type VARCHAR(15))
 BEGIN	
-	SELECT c.name, c.MainAddress, i.code , i.address as InstallationAddress
+	SELECT c.name, c.Main_Address, i.code , i.address as Installation_Address
 	FROM Clients c
 	INNER JOIN installation i on c.idClient = i.Client_idClient 
     INNER JOIN InstallationTypeDesc TD on TD.TypeID = i.TypeID
@@ -84,46 +93,55 @@ BEGIN
 	ORDER BY
 	 name ASC;
 END; $$$
-DELIMITER;
 
 -- RF5 Visualizar os clientes que tenham contratado um determinado pacote/serviço.
-DROP PROCEDURE IF EXISTS clients_by_package_type;
+
 DELIMITER $$$
 CREATE  PROCEDURE clients_by_package_type(IN ServiceType INT)
 BEGIN	
 	SELECT cl.name, cl.main_address, i.address as Installation_Address, s.name
 	FROM installation i
-	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
-	INNER JOIN Contract co ON i.code = co.Installation_code
-	INNER JOIN ServiceDesc s ON s.Type = co.ServiceDesc_Type 
+	INNER JOIN Clients 		cl ON cl.idClient = i.Client_idClient
+	INNER JOIN Contract 	co ON i.code	  = co.Installation_code
+	INNER JOIN ServiceDesc 	s  ON s.Type 	  = co.ServiceDesc_Type 
 	WHERE
 		co.ServiceDesc_Type = ServiceType;
 	-- 1 lowcost , 2 normal, 3 professional
 END; $$$
-DELIMITER;
 
 -- RF6 Visualizar todos os dispositivos instalados numa dada instalação dentro de um intervalo de tempo.
-DROP PROCEDURE IF EXISTS installation_devices;
 DELIMITER $$$
-CREATE  PROCEDURE installation_devices(IN startDate date, IN endDate date, IN installationCode INT)
+CREATE  PROCEDURE 
+	installation_devices(
+						IN startDate 		date,
+                        IN endDate 			date, 
+                        IN installationCode INT )
 BEGIN	
-	SELECT d.* , i.address as Installation_address
-	FROM Devices d
-	INNER JOIN Installation i ON i.code = d.Installation_code
-	WHERE
-		 i.code = installationCode
-		 and (d.InstallationDate >= startDate and d.InstallationDate <= endDate);
+	SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description
+		FROM DevicesOutput d
+		INNER JOIN Installation i  ON i.code 			= d.InstallationID
+		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID
+		WHERE
+			 i.code = installationCode
+			 and (d.InstallationDate >= startDate and d.InstallationDate <= endDate)
+	UNION ALL 
+		SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description
+		FROM DevicesInput d
+		INNER JOIN Installation i  ON i.code 			= d.InstallationID
+		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID
+		WHERE
+			 i.code = installationCode
+			and (d.InstallationDate >= startDate and d.InstallationDate <= endDate);
+        
 END; $$$
-DELIMITER;
 
 -- RF7 Visualizar o valor médio de faturação (fatura paga) de um cliente num intervalo de tempo
-DROP PROCEDURE IF EXISTS client_invoice_average;
 DELIMITER $$$
 CREATE  PROCEDURE 
 	client_invoice_average(
 					IN startDate 	date,
                     IN endDate 		date,
-                    IN clientId 	INT)
+                    IN clientId 	INT	)
 BEGIN	
 
 	SELECT cl.name, AVG(s.cost) as Average_Invoice_Value
@@ -135,12 +153,10 @@ BEGIN
 		WHERE
 			cl.idClient = clientId and
 			 (inv.Date >= startDate and inv.Date <= endDate);
-END; $$$
-DELIMITER;
+END; $$$ 
  
- 
--- RF8 Visualizar as instalações com automações, dentro de um intervalo de tempo.     
-DROP PROCEDURE IF EXISTS installations_with_automations;
+-- RF8 Visualizar as instalações com automações, dentro de um intervalo de tempo.   
+-- Acho que isto n\ao esta bem  
 DELIMITER $$$
 CREATE PROCEDURE 
 	installations_with_automations(
@@ -166,33 +182,27 @@ BEGIN
 	ORDER BY InstallationID ASC;
      
 END; $$$
-DELIMITER;
-
 
  -- RF10 Proponha um requisito relevante ainda por identificar e que requeira uma query simples para o satisfazer (Query ou View usada numa Query). Implemente.
  -- Todos os clientes que ainda não pagaram o invoice
-DROP PROCEDURE IF EXISTS total_clients_InvoiceState;
 DELIMITER $$$
 CREATE  PROCEDURE total_clients_InvoiceState(IN state VARCHAR(10))
 BEGIN
 
-	SELECT cl.name, idesc.Description as State , SUM(s.cost) as Invoice_Total
-		FROM Invoice inv
-		INNER JOIN InvoiceStateDesc idesc 	ON idesc.StateID = inv.State
-		INNER JOIN Contract 		co  	ON idContract  	 = inv.ContractID
-		INNER JOIN ServiceDesc 		s  		ON s.Type 	  	 = co.ServiceDesc_Type 
-		INNER JOIN Installation 	i  		ON i.code 	 	 = co.Installation_code
-		INNER JOIN Clients 			cl 		ON cl.idClient	 = i.Client_idClient
-		GROUP BY
-		cl.name
+	SELECT cl.name, cl.main_address, i.address as Installation_Address, idesc.Description
+		FROM installation i
+		INNER JOIN Clients 			cl 		ON cl.idClient	 	= i.Client_idClient
+		INNER JOIN Contract 		co  	ON i.code		 	= co.Installation_code
+		INNER JOIN Invoice 			inv 	ON co.idContract 	= inv.ContractID
+		INNER JOIN InvoiceStateDesc idesc 	ON idesc.StateID 	= inv.State
+		WHERE
+			idesc.Description = state
 		ORDER BY
 			cl.name ASC;
 END; $$$
-DELIMITER;
     
 -- RF 11 Proponha um requisito relevante ainda por identificar e que requeira uma query com funções de agregação (sum, max, min, avg, etc) para o satisfazer. Implemente.
 -- total pago ou por pagar por cada cliente
-DROP PROCEDURE IF EXISTS total_Invoice_value_all_clients;
 DELIMITER $$$
 CREATE  PROCEDURE total_Invoice_value_all_clients()
 BEGIN
@@ -210,10 +220,8 @@ BEGIN
 			cl.name ASC;
         
 END; $$$
-DELIMITER ;
 
 -- RF 12 Proponha um requisito relevante ainda por identificar e que requeira o desenvolvimento de functions / procedures para o satisfazer. Implemente.
-DROP PROCEDURE IF EXISTS get_num_client_installations;
 DELIMITER $$$
 CREATE FUNCTION get_num_client_installations(ClientId int)
 RETURNS int
@@ -227,9 +235,7 @@ BEGIN
         
 	RETURN total;
 
-END; $$$
-DELIMITER ;                
-                
+END; $$$                
                 
 Select * from Clients;
 Select * from Contract;
