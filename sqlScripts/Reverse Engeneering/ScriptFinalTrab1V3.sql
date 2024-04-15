@@ -29,6 +29,13 @@ ALTER TABLE `Invoice`               AUTO_INCREMENT = 0;
 ALTER TABLE `InvoiceStateDesc`      AUTO_INCREMENT = 0;
 ALTER TABLE `Suppliers`             AUTO_INCREMENT = 0;
 
+CREATE OR REPLACE VIEW DevicesAll AS 
+	SELECT InstallationDate, InstallationID, ModelID, StateID, Description
+		FROM DevicesOutput 
+	UNION ALL 
+		SELECT InstallationDate, InstallationID, ModelID, StateID, Description
+		FROM DevicesInput d;
+	
 INSERT IGNORE INTO 
 ServiceDesc (name			, Cost	, MaxDevices)
 	VALUES	("Lowcost"		, 10	, 2			),
@@ -84,7 +91,7 @@ DROP FUNCTION  IF EXISTS get_num_client_installations;
 DELIMITER $$$
 CREATE PROCEDURE clients_by_installation_type(IN installation_type VARCHAR(15))
 BEGIN	
-	SELECT c.name, c.Main_Address, i.code , i.address as Installation_Address
+	SELECT c.name, c.Main_Address, i.code as "Installation Code", i.address as Installation_Address
 	FROM Clients c
 	INNER JOIN installation i on c.idClient = i.Client_idClient 
     INNER JOIN InstallationTypeDesc TD on TD.TypeID = i.TypeID
@@ -109,6 +116,7 @@ BEGIN
 	-- 1 lowcost , 2 normal, 3 professional
 END; $$$
 
+
 -- RF6 Visualizar todos os dispositivos instalados numa dada instalação dentro de um intervalo de tempo.
 DELIMITER $$$
 CREATE  PROCEDURE 
@@ -117,21 +125,14 @@ CREATE  PROCEDURE
                         IN endDate 			date, 
                         IN installationCode INT )
 BEGIN	
+
 	SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description
-		FROM DevicesOutput d
-		INNER JOIN Installation i  ON i.code 			= d.InstallationID
+		FROM DevicesAll d
+        INNER JOIN Installation i  ON i.code 			= d.InstallationID 
 		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID
-		WHERE
+        WHERE
 			 i.code = installationCode
-			 and (d.InstallationDate >= startDate and d.InstallationDate <= endDate)
-	UNION ALL 
-		SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description
-		FROM DevicesInput d
-		INNER JOIN Installation i  ON i.code 			= d.InstallationID
-		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID
-		WHERE
-			 i.code = installationCode
-			and (d.InstallationDate >= startDate and d.InstallationDate <= endDate);
+			 and (d.InstallationDate >= startDate and d.InstallationDate <= endDate);
         
 END; $$$
 
@@ -166,20 +167,11 @@ BEGIN
 
 	SELECT i.address as addresses_with_automations, InstallationID
 		FROM Installation i
-		RIGHT JOIN DevicesOutput d ON I.code = d.InstallationID -- Aqui não é igual fazer Inner??
+		RIGHT JOIN DevicesALL d ON I.code = d.InstallationID -- Aqui não é igual fazer Inner??
 		WHERE
 		(d.InstallationDate >= startDate and d.InstallationDate <= endDate) 
 		GROUP BY
-		i.address
-	Union All
-	SELECT i.address as addresses_with_automations , InstallationID
-		FROM Installation i
-		RIGHT JOIN DevicesInput  d  ON I.code = d.InstallationID
-		WHERE
-		(d.InstallationDate >= startDate and d.InstallationDate <= endDate)
-		GROUP BY
-		i.address
-	ORDER BY InstallationID ASC;
+		i.address;
      
 END; $$$
 
@@ -225,18 +217,35 @@ END; $$$
 DELIMITER $$$
 CREATE FUNCTION get_num_client_installations(ClientId int)
 RETURNS int
-BEGIN
+BEGIN 
 	DECLARE total int;
 	SELECT COUNT(i.code) INTO total
 	FROM installation i
 	INNER JOIN Clients cl ON cl.idClient = i.Client_idClient
 	WHERE
-		idClient = ClientId;
+		cl.idClient = ClientId;
         
 	RETURN total;
+END;
+$$$
 
-END; $$$                
-                
+-- Rf4
+call clients_by_installation_type("House");
+-- RF5
+call clients_by_package_type(1); -- digit service package type (-- 1 lowcost , 2 normal, 3 professional)
+-- RF6
+call installation_devices('2000-01-01','2029-3-31',6); -- last digit installation code
+-- RF7 
+ call client_invoice_average('2000-01-01','2029-3-31',6); -- last digit is clientId
+-- RF8 
+ call installations_with_automations('2020-01-01','2024-03-31');
+-- RF10
+call total_clients_InvoiceState("Pending"); -- or "Paid"
+-- RF 11
+call total_Invoice_value_all_clients();
+-- RF12
+select get_num_client_installations(2); -- digit is clientId
+
 Select * from Clients;
 Select * from Contract;
 Select * from DevicesInput;

@@ -25,11 +25,12 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.println("MDE Lab1 - Welcome to the Java Project");
         Connection conn = MySQL_Integration.createConnection(url,username,password);
-        System.out.println(get_num_client_installations(conn,22));
-
+        
+        //CreateData(conn);
+        installations_with_automations(conn,"2000-01-01","2029-3-31");
+        //clients_by_package_type(conn,2);
         //Start Connection
             
-        //CreateData(conn);
 
         //MQTT Broker information
         //ATTENTION!!!
@@ -66,12 +67,12 @@ public class Main {
             //TODO isto devia ser um proc or smth
             
             int in = 0;
-
+            String Query;
             //Insert Clients
             for( int i = 1; i < 100; ++i ){
 
                 String Name  = new String ( RD.GetFirstName() + " " + RD.GetMiddleName() );
-                String Query = new String( "INSERT INTO Clients( name\t, main_address\t ,\tcontact\t , NIF  \t)\n" + //
+                Query = new String( "INSERT INTO Clients( name\t, main_address\t ,\tcontact\t , NIF  \t)\n" + //
                 "VALUES \t\n" + //
                 "( \""+ Name +"\"\t, \""+RD.GetAddress()+"\" ,\""+Name.replace(' ', '.').toLowerCase()+'@'+RD.GetMailSufix()+"\", "+RD.GetNIF()+")");
                 MySQL_Integration.executeUpdate(conn,Query);
@@ -89,13 +90,13 @@ public class Main {
                     "VALUES (5, '"+RDate+"',"+in+" ,"+( (int)Math.round(Math.random() + 1))+", NULL, NULL)";
                     MySQL_Integration.executeUpdate(conn,Query);
                     
-                    if( Math.random() < 0.95 ){
+                    //if( Math.random() < 0.95 ){
                         
                         Query = "INSERT INTO Contract (StartDate, ServiceDuration, ServiceDesc_Type, Installation_code)"+ 
-                        " VALUES ('"+RDate+"', '"+RD.GetEndDate()+"', "+ RD.GetServType() +", "+j+")";
+                        " VALUES ('"+RDate+"', '"+RD.GetEndDate()+"', "+ RD.GetServType() +", "+in+")";
                         MySQL_Integration.executeUpdate(conn,Query);
 
-                    }
+                    //}
 
                     
                     for( int n = 1; n < ( (int) (Math.random()*8) );++n ) {
@@ -106,8 +107,18 @@ public class Main {
 
                     }
                 }
+                
             }
-            
+            Query = new String("INSERT INTO Invoice (InvoiceNumber, Date, State, ContractID)"+
+                                    "VALUES"+
+                                    "	(822547, '2023-12-11', 1, 1),"+
+                                    "	(801770, '2024-01-01', 1, 2),"+
+                                    "	(951156, '2020-12-10', 1, 3),"+
+                                    "	(852691, '2023-12-11', 1, 4),"+
+                                    "	(169529, '2024-01-01', 0, 5),"+
+                                    "	(416611, '2023-12-11', 0, 6),"+
+                                    "	(106329, '2023-12-11', 0, 7);");
+            MySQL_Integration.executeUpdate(conn,Query); 
 
             /*
             //Execute Query
@@ -136,7 +147,7 @@ public class Main {
             "	WHERE"+
             "		co.ServiceDesc_Type = "+ServiceType+";");
         //Process Result
-        System.out.println("Name| main_address| Installation_Address| Name");
+        System.out.println("Name| main_address| Installation_Address| Plano");
         while (resultSet.next()) {
             System.out.println(
                 resultSet.getString("cl.name")+'|'+
@@ -173,20 +184,12 @@ public class Main {
 
         ResultSet resultSet = MySQL_Integration.executeQuery(conn,
                 "SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description"+
-                "		FROM DevicesOutput d"+
-                "		INNER JOIN Installation i  ON i.code 			= d.InstallationID"+
+                "		FROM DevicesAll d"+
+                "        INNER JOIN Installation i  ON i.code 			= d.InstallationID "+
                 "		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID"+
-                "		WHERE"+
+                "        WHERE"+
                 "			 i.code = "+InstallationCode+
-                "			 and (d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\')"+
-                "	UNION ALL "+
-                "		SELECT i.address as Installation_address , dd.Model , d.InstallationDate, d.Description"+
-                "		FROM DevicesInput d"+
-                "		INNER JOIN Installation i  ON i.code 			= d.InstallationID"+
-                "		INNER JOIN DeviceDesc 	dd ON dd.idDevice_desc 	= d.ModelID"+
-                "		WHERE"+
-                "			 i.code = "+InstallationCode+
-                "			 and (d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\')");
+                "			 and (d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\');");
         
         //Process Result
         System.out.println("Installation_address| Model| InstallationDate | Description");
@@ -227,20 +230,13 @@ public class Main {
     public static void installations_with_automations(Connection conn, String StartDate, String EndDate) throws SQLException{
 
         ResultSet resultSet = MySQL_Integration.executeQuery(conn,
-                "SELECT i.address as addresses_with_automations, InstallationID"+
-                "		FROM Installation i"+
-                "		RIGHT JOIN DevicesOutput d ON I.code = d.InstallationID -- Aqui não é igual fazer Inner??"+
-                "		WHERE"+
-                "		(d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\') "+
-                "		GROUP BY InstallationID"+
-                "	Union All"+
-                "	SELECT i.address as addresses_with_automations , InstallationID"+
-                "		FROM Installation i"+
-                "		RIGHT JOIN DevicesInput  d  ON I.code = d.InstallationID"+
-                "		WHERE"+
-                "		(d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\') "+
-                "		GROUP BY InstallationID"+
-                "	ORDER BY InstallationID ASC");
+                    "SELECT i.address as addresses_with_automations, InstallationID"+
+                    "		FROM Installation i"+
+                    "		RIGHT JOIN DevicesALL d ON I.code = d.InstallationID -- Aqui não é igual fazer Inner??"+
+                    "		WHERE"+
+                    "		(d.InstallationDate >= \'"+StartDate+"\' and d.InstallationDate <= \'"+EndDate+"\') "+
+                    "		GROUP BY"+
+                    "		i.address;");
         
         //Process Result
         System.out.println("Address With Automations | InstallationID");
@@ -319,10 +315,8 @@ public class Main {
         
                 resultSet.next();
                 return resultSet.getString(1);
-                
 
     } 
-
 }
 
 
